@@ -56,8 +56,8 @@ openeducat="True"
 Openworx="True"
 JayVoraSerpentCS="True"
 
-WKHTMLTOX_X64="https://security.ubuntu.com/ubuntu/pool/universe/w/wkhtmltopdf/wkhtmltopdf_0.12.6-2build222.4_amd64.deb"
-WKHTMLTOX_X32="https://security.ubuntu.com/ubuntu/pool/universe/w/wkhtmltopdf/wkhtmltopdf_0.12.6-2build222.4_i386.deb"
+WKHTMLTOX_X64="https://security.ubuntu.com/ubuntu/pool/universe/w/wkhtmltopdf/wkhtmltopdf_0.12.6-2build2_amd64.deb"
+WKHTMLTOX_X32="https://security.ubuntu.com/ubuntu/pool/universe/w/wkhtmltopdf/wkhtmltopdf_0.12.6-2build2_amd64.deb"
 
 #--------------------------------------------------
 # Update Server
@@ -401,6 +401,7 @@ if [ $MuKIT = "True" ]; then
   REPOS=( "${REPOS[@]}" "https://github.com/muk-it/muk_dms.git mukit/muk_dms")
   REPOS=( "${REPOS[@]}" "https://github.com/muk-it/muk_docs.git mukit/muk_docs")
   REPOS=( "${REPOS[@]}" "https://github.com/muk-it/muk_quality.git mukit/muk_quality")
+  REPOS=( "${REPOS[@]}" "https://github.com/muk-it/odoo-modules.git mukit/odoo-modules")
 fi
 if [ $SythilTech = "True" ]; then
   REPOS=( "${REPOS[@]}" "https://github.com/SythilTech/Odoo.git SythilTech/Odoo")
