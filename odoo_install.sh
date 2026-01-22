@@ -26,9 +26,9 @@ OE_PORT="8069"
 # IMPORTANT! This script contains extra libraries that are specifically needed for Odoo 17.0
 OE_VERSION="19.0"
 # Set this to True if you want to install the Odoo enterprise version!
-IS_ENTERPRISE="True"
+IS_ENTERPRISE="False"
 # Installs postgreSQL V16 instead of defaults (e.g V12 for Ubuntu 20/22) - this improves performance
-INSTALL_POSTGRESQL_SIXTEEN="True"
+INSTALL_POSTGRESQL_SIXTEEN="False"
 # Set this to True if you want to install Nginx!
 INSTALL_NGINX="False"
 # Set the superadmin password - if GENERATE_RANDOM_PASSWORD is set to "True" we will automatically generate a random password, otherwise we use this one
@@ -46,14 +46,14 @@ ENABLE_SSL="True"
 ADMIN_EMAIL="msdeek@mediafish.agency"
 # Set Custom Modules
 OCA="True"
-SAAS="True"
-CybroOdoo="True"
+SAAS="False"
+CybroOdoo="False"
 MuKIT="True"
-SythilTech="True"
-odoomates="True"
-openeducat="True"
-Openworx="True"
-JayVoraSerpentCS="True"
+SythilTech="False"
+odoomates="False"
+openeducat="False"
+Openworx="False"
+JayVoraSerpentCS="False"
 
 # Helper: pip install with optional --break-system-packages (Ubuntu 24.04 / PEP 668)
 pip_install() {
@@ -122,7 +122,7 @@ sudo apt-get install -y libpq-dev
 #--------------------------------------------------
 echo -e "\n---- Install PostgreSQL Server ----"
 echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
-sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
+#sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
 
 
 #--------------------------------------------------
@@ -131,8 +131,7 @@ sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
 echo -e "\n--- Installing Python 3 + pip3 --"
 sudo apt-get install -y python3 python3-pip
 sudo apt-get install git python3-cffi build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng-dev libjpeg-dev gdebi -y
-sudo apt-get install git python3-cffi build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng-dev libjpeg-dev gdebi -y
-sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev libmysqlclient-dev libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev
+
 
 echo -e "\n---- Install python packages/requirements ----"
 
