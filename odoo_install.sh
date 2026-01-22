@@ -26,7 +26,7 @@ OE_PORT="8069"
 # IMPORTANT! This script contains extra libraries that are specifically needed for Odoo 17.0
 OE_VERSION="19.0"
 # Set this to True if you want to install the Odoo enterprise version!
-IS_ENTERPRISE="False"
+IS_ENTERPRISE="True"
 # Installs postgreSQL V16 instead of defaults (e.g V12 for Ubuntu 20/22) - this improves performance
 INSTALL_POSTGRESQL_SIXTEEN="False"
 # Set this to True if you want to install Nginx!
@@ -34,7 +34,7 @@ INSTALL_NGINX="False"
 # Set the superadmin password - if GENERATE_RANDOM_PASSWORD is set to "True" we will automatically generate a random password, otherwise we use this one
 OE_SUPERADMIN="admin"
 # Set to "True" to generate a random password, "False" to use the variable in OE_SUPERADMIN
-GENERATE_RANDOM_PASSWORD="True"
+GENERATE_RANDOM_PASSWORD="False"
 OE_CONFIG="${OE_USER}-server"
 # Set the website name
 WEBSITE_NAME="mediafish.agency"
@@ -46,14 +46,14 @@ ENABLE_SSL="True"
 ADMIN_EMAIL="msdeek@mediafish.agency"
 # Set Custom Modules
 OCA="True"
-SAAS="False"
-CybroOdoo="False"
+SAAS="True"
+CybroOdoo="True"
 MuKIT="True"
-SythilTech="False"
-odoomates="False"
-openeducat="False"
-Openworx="False"
-JayVoraSerpentCS="False"
+SythilTech="True"
+odoomates="True"
+openeducat="True"
+Openworx="True"
+JayVoraSerpentCS="True"
 
 # Helper: pip install with optional --break-system-packages (Ubuntu 24.04 / PEP 668)
 pip_install() {
@@ -123,7 +123,7 @@ sudo apt-get install -y libpq-dev
 echo -e "\n---- Install PostgreSQL Server ----"
 echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
 #sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
-
+apt install postgresql-client-common
 
 #--------------------------------------------------
 # Install Dependencies
@@ -131,6 +131,7 @@ echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
 echo -e "\n--- Installing Python 3 + pip3 --"
 sudo apt-get install -y python3 python3-pip
 sudo apt-get install git python3-cffi build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng-dev libjpeg-dev gdebi -y
+sudo apt install -y python3-bs4
 
 
 echo -e "\n---- Install python packages/requirements ----"
@@ -232,11 +233,18 @@ else
     sudo su root -c "printf 'xmlrpc_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
 fi
 sudo su root -c "printf 'logfile = /var/log/${OE_USER}/${OE_CONFIG}.log\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'admin_passwd = Ms3343785@\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'db_host = 10.108.0.11\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'db_maxconn = 200\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'db_password = MSD123456\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'db_user = odoo\n' >> /etc/${OE_CONFIG}.conf"
+sudo su root -c "printf 'data_dir = /var/www/odoo/\n' >> /etc/${OE_CONFIG}.conf"
 
 if [ $IS_ENTERPRISE = "True" ]; then
     sudo su root -c "printf 'addons_path=${OE_HOME}/enterprise/addons,${OE_HOME_EXT}/addons\n' >> /etc/${OE_CONFIG}.conf"
 else
-    sudo su root -c "printf 'addons_path=${OE_HOME_EXT}/addons,${OE_HOME}/custom/addons\n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf 'addons_path= ${OE_HOME_EXT}/addons,\n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf '             ${OE_HOME}/custom/addons\n' >> /etc/${OE_CONFIG}.conf"
 fi
 sudo chown $OE_USER:$OE_USER /etc/${OE_CONFIG}.conf
 sudo chmod 640 /etc/${OE_CONFIG}.conf

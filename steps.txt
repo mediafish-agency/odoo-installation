@@ -1,0 +1,6 @@
+mkdir -p /var/www/odoo
+sudo chown nobody:nogroup /var/www/odoo
+sudo chmod 777 /var/www/odoo
+sudo nano /etc/fstab
+10.108.0.12:/mnt/nfs/odoo/19  /var/www/odoo  nfs4  rw,_netdev,noatime,hard,proto=tcp,vers=4.2,rsize=524288,wsize=524288,timeo=600,retrans=5  0  0
+sudo mount -a
