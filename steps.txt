@@ -1,3 +1,5 @@
+
+sudo apt install -y nfs-common
 mkdir -p /var/www/odoo
 sudo chown nobody:nogroup /var/www/odoo
 sudo chmod 777 /var/www/odoo
